@@ -1,23 +1,21 @@
 import type { NowPlayingConnectionStatus, NowPlayingLyricPayload, NowPlayingTrackSnapshot } from '../types';
 
 // https 頁面用 wss、http 頁面用 ws（HTTPS PWA 連 TLS tunnel 必須 wss）
-const nowPlayingWsScheme = (): string =>
-    (typeof window !== 'undefined' && window.location.protocol === 'https:') ? 'wss' : 'ws';
+// 預設要連的 now-playing 主機（PWA 從主畫面開、沒帶 ?npHost= 時用這個）
+const DEFAULT_NP_HOST = 'starring-institution-oecd-redeem.trycloudflare.com';
 
-// 允許用網址參數 ?npHost=xxx 指定 now-playing 主機（會記到 localStorage，
-// 之後從主畫面開 PWA 不帶參數也記得）；沒有就用本機預設。
 const resolveNowPlayingHost = (): string => {
-    if (typeof window === 'undefined') return 'localhost:9863';
+    if (typeof window === 'undefined') return DEFAULT_NP_HOST;
     try {
         const q = new URLSearchParams(window.location.search).get('npHost');
         if (q) {
             window.localStorage.setItem('folia:npHost', q);
             return q;
         }
-        return window.localStorage.getItem('folia:npHost') || 'localhost:9863';
-    } catch {
-        return 'localhost:9863';
-    }
+        const stored = window.localStorage.getItem('folia:npHost');
+        if (stored) return stored;
+    } catch { /* ignore */ }
+    return DEFAULT_NP_HOST;
 };
 
 // 從 host 組出 WS 位址；OBS 來源頁也會用到，所以一起吃 scheme 判斷。
