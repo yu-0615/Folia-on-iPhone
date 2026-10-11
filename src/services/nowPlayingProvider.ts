@@ -27,11 +27,6 @@ export const buildNowPlayingWsUrl = (host: string): string =>
 
 export const NOW_PLAYING_WS_URL = buildNowPlayingWsUrl(resolveNowPlayingHost());
 
-// 從 host 組出 WS 位址；OBS 來源頁也會用到，所以一起吃 scheme 判斷。
-export const buildNowPlayingWsUrl = (host: string): string =>
-    `${nowPlayingWsScheme()}://${host}/api/ws/lyric`;
-
-export const NOW_PLAYING_WS_URL = buildNowPlayingWsUrl(resolveNowPlayingHost());
 
 type NowPlayingTrackMessage = {
     author?: string;
