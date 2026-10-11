@@ -1,6 +1,9 @@
 import type { NowPlayingConnectionStatus, NowPlayingLyricPayload, NowPlayingTrackSnapshot } from '../types';
 
 // https 頁面用 wss、http 頁面用 ws（HTTPS PWA 連 TLS tunnel 必須 wss）
+const nowPlayingWsScheme = (): string =>
+    (typeof window !== 'undefined' && window.location.protocol === 'https:') ? 'wss' : 'ws';
+
 // 預設要連的 now-playing 主機（PWA 從主畫面開、沒帶 ?npHost= 時用這個）
 const DEFAULT_NP_HOST = 'starring-institution-oecd-redeem.trycloudflare.com';
 
@@ -17,6 +20,12 @@ const resolveNowPlayingHost = (): string => {
     } catch { /* ignore */ }
     return DEFAULT_NP_HOST;
 };
+
+// 從 host 組出 WS 位址；OBS 來源頁也會用到
+export const buildNowPlayingWsUrl = (host: string): string =>
+    `${nowPlayingWsScheme()}://${host}/api/ws/lyric`;
+
+export const NOW_PLAYING_WS_URL = buildNowPlayingWsUrl(resolveNowPlayingHost());
 
 // 從 host 組出 WS 位址；OBS 來源頁也會用到，所以一起吃 scheme 判斷。
 export const buildNowPlayingWsUrl = (host: string): string =>
