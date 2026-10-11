@@ -630,7 +630,7 @@ const UnifiedPanel: React.FC<UnifiedPanelProps> = ({
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0, scale: 0.9 }}
                             data-testid="unified-panel-surface"
-                            className={`pointer-events-auto w-80 ${glassBg} backdrop-blur-3xl rounded-3xl shadow-2xl flex flex-col mb-16 md:mb-2 overflow-y-auto hide-scrollbar`}
+                            className={`pointer-events-auto w-72 ${glassBg} backdrop-blur-3xl rounded-3xl shadow-2xl flex flex-col mb-16 md:mb-2 overflow-y-auto hide-scrollbar`}
                             style={{ color: theme.primaryColor, maxHeight: panelMaxHeight }}
                         >
                             <div className="p-5 flex flex-col">
@@ -969,7 +969,7 @@ const UnifiedPanel: React.FC<UnifiedPanelProps> = ({
                         transition={{ duration: 0.24, ease: 'easeOut' }}
                         data-testid="panel-toggle"
                         style={{ bottom: bottomBarBottomPx }}
-                        className="pointer-events-auto fixed right-0 z-[60] pr-4 md:pr-8 group w-20 flex justify-end"
+                        className="pointer-events-auto fixed right-6 z-[60] pr-4 md:pr-8 group w-20 flex justify-end"
                         onMouseEnter={handleToggleButtonMouseEnter}
                         onMouseLeave={handleToggleButtonMouseLeave}
                         onPointerDown={handleToggleHotspotPointerDown}
@@ -982,7 +982,7 @@ const UnifiedPanel: React.FC<UnifiedPanelProps> = ({
                                     width: '96px',
                                     transition: 'opacity 200ms ease-out',
                                 }}
-                                className={`absolute right-0 top-0 h-12 rounded-full border pointer-events-none z-0 ${
+                                className={`absolute right-6 top-0 h-12 rounded-full border pointer-events-none z-0 ${
                                     isGuideLineVisible || isDragging
                                         ? 'opacity-100'
                                         : 'opacity-0'
